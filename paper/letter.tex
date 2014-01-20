@@ -1,32 +1,151 @@
 \documentclass[]{letter}
 
 \usepackage{graphicx}
+\usepackage{enumitem}
 
-\usepackage[margin=1.375in]{geometry}
+\usepackage[margin=1.25in]{geometry}
 
-%% \topmargin 0.0cm
-%% \oddsidemargin 0.0cm
-%% \evensidemargin 0.0cm
-%% \textwidth 5.75in
-%% \textheight 9.25in
+\hyphenation{man-u-script}
 
-%% \usepackage{hyperref}
-
-\signature{Eric G. Hunsberger}
+\signature{Eric Hunsberger\\Matthew Scott\\Chris Eliasmith}
 \address{Centre for Theoretical Neuroscience\\200 University Ave. W.\\Waterloo, ON, Canada N2L 3G1}
 \date{\today}
 
 \begin{document}
-\begin{letter}{Editoral Board\\Neural Computation}
-\opening{Dear Sir or Madam:}
+\begin{letter}{Editorial Board\\Neural Computation}
+\opening{Dear Editor:}
 
-I am writing on behalf of myself and my co-authors, Matthew Scott and Chris Eliasmith, to present you with a manuscript that we have prepared for publication in Neural Computation, entitled ``Heterogeneity increases information transmission of neuronal populations''. This article examines the effects of heterogeneity on information transmission in populations of simulated neurons, and finds that it has a role to play in increasing the amount of information a population is able to encode and transmit about an input signal. We compare these results with previous results in the stochastic resonance field detailing how noise can benefit information transmission in neural populations, and find that heterogeneity has similar effects to noise in this respect.
+Please find enclosed a revised version of our paper, now entitled ``The competing benefits of noise and heterogeneity in neural coding''. The comments and critiques from both reviewers have been helpful in improving the content and presentation of the manuscript. This letter details our changes to the manuscript since its previous submission, and describes how these changes address the criticisms of the reviewers. We respond to each reviewer comment individually, with the quoted comment presented in an indented paragraph, followed by our response.
 
-This research is important to the field because it advances the view that heterogeneity has a role to play in neural systems, and explains in detail why this is so. Research in stochastic resonance has done a great service by documenting the beneficial effects of noise in simulated, in vitro, and in vivo neural systems, but this same service has not yet been extended to heterogeneity. The goal of this manuscript is to provide theoretical foundations for understanding the mechanisms by which heterogeneity operates, and why it is important to neural systems. These foundations tie together the limited amount of existing research on the subject, and provide direction and motivation for future theoretical and experimental research into heterogeneity in neural systems.
 
-Given the general interest of this paper and its potential to inspire future research in the area, we ask that you consider the enclosed manuscript for publication in Neural Computation. None of the material in the article has been published or is under consideration for publication elsewhere. We thank you for your time, and look forward to your reply.
+\ \newline
+{\large \bf Reviewer~1}
+
+\begin{quotation}
+  The paper "Heterogeneity increases information transmission of neuronal populations" examines the role of heterogeneity in neuronal coding among groups of neurons of the same type using simulations of FitzHugh-Nagumo and Leaky Integrate and Fire (LIF) neurons.  Many of the central findings of this paper, including the results that heterogeneity improves information transmission have been published previously in one version or another, for example:
+
+  \begin{enumerate}[label=\arabic*)]
+  \item The neural basis for combinatorial coding in a cortical population response.
+    Osborne LC, Palmer SE, Lisberger SG, Bialek W.
+  \item Intrinsic biophysical diversity decorrelates neuronal firing while increasing information content. Padmanabhan K, Urban NN.
+  \item The effect of noise correlations in populations of diversely tuned neurons. Ecker AS, Berens P, Tolias AS, Bethge M.
+  \item Implications of neuronal diversity on population coding. Shamir M, Sompolinsky H.
+  \item Intrinsic heterogeneity in oscillatory dynamics limits correlation-induced neural synchronization. Burton SD, Ermentrout GB, Urban NN.
+  \item Efficient coding in heterogeneous neuronal populations. Chelaru MI, Dragoi V.
+  \end{enumerate}
+
+  This is just a short list of recent papers.  The work by Padmanabhan and Urban (2010) for instance, has a nearly identical title to this manuscript and reports the central finding of this paper, demonstrating this not only theoretically by experimentally.  Additionally, work on the connection between heterogeneity and stochastic resonance and synchrony has been previously published by a number of authors.
+
+  For instance, the results in section 2.1 Phase, are described in part by Burton et al (2012).  In addition to the ones described above, nearly a dozen previous papers exploring the question of heterogeneity and information coding have either been overlooked or not correctly cited by the authors.  Consequently, a more complete literature review, both of neuroscience results in general, and computational neuroscience results specifically is warranted to determine what parts in this manuscript have not been previously published.
+\end{quotation}
+
+As Reviewer~1 observed, many areas of our paper reproduce results previously observed to some extent in the literature, and we have included additional references to document this. Specifically, we have added all the references suggested by Reviewer~1. We also performed further literature review, and added additional references to related heterogeneity studies, including a recent study by Mejias and Longtin (2012). These references, in addition to the references suggested by Reviewer~2, constitute a more complete review of the field.
+
+\begin{quotation}
+  The results in section 2.2 Response time require considerable development to be interesting, and may be an artifact of the parameters chosen.  The authors are interested in describing the latency to firing of a population of neurons to a step input.  They draw attention to the importance of heterogeneity to spread the latency times across the population, thus improving the mean response time.  However, if the speed of response is the key metric by which information is conveyed, then having a population where the threshold is very low, or the bias (b(i)) is high (b(i) =0.1) for the population would be most optimal.  In their simulations, would not a population where b(i) = 0.01 be the ones that respond fastest (particularly in the  FHN) neurons)and have a shorted latency as compared to a population where b(i) = [-0.01 to 0.01]?  If that is correct, then their argument that diversity improves response time as compared to a homogeneous population with a low threshold is a ``straw man'' argument, achieved as a result of idiosyncratic parameter choices that produce their desired outcome.  Would it not be correct that a homogeneous population would have a shorter latency if the threshold of that population was sufficiently low as compared to a diverse population with the different thresholds?
+\end{quotation}
+
+We have removed all results and discussion related to the benefits of noise and heterogeneity on response time. As Reviewer~1 observed, our presented results could have simply been the result of ``idiosyncratic parameter choices.'' While we do not believe this is the case, we do agree that the claim would have required significantly more development to sufficiently justify this conclusion. These results were not essential to our main thesis, and we therefore elected to remove them entirely.
+
+\begin{quotation}
+  Although the main result of the manuscript is one of interest to the theoretical and experimental neuroscience community, the subject has been explored in detail previously (a simple Pubmed search of ``heterogeneity and neuronal coding'' pulls up many of the papers that the authors appear not to be aware of) and is therefore not novel.
+\end{quotation}
+
+The main concern of Reviewer~1 is that the work presented in our paper is not novel. In our most extensive change to the paper, we added additional figures and refocused the presentation of the material to highlight the complex interaction between noise and heterogeneity in neuronal populations. This is the main contribution of our paper to the field, and we have revised the paper to emphasize this novel result.
+
+\begin{quotation}
+  Minor Comments:
+  \begin{itemize}
+  \item The authors should distinguish how heterogeneity in the bias is conceptually different from heterogeneity in threshold (which has been described previously), which would produce many of the same results described here.
+  \end{itemize}
+\end{quotation}
+
+Throughout the manuscript, we have replaced references to bias currents with references to firing threshold. In our experimental setup, these values are one and the same, but we wanted to emphasize that our results corroborate previous results related to the benefits of heterogeneity in firing threshold.
+
+\begin{quotation}
+  \ \vspace{-1.3em}
+  \begin{itemize}
+  \item There are a number of formatting and typographical errors through the manuscript. These seem to appear in the original uploaded file that made the manuscript difficult to read. For instance in the first line of the abstract, ``Noise- speci cally random uctuations added to the membrane voltages of a neuronal population.'' A few lines down ``Furthermore, we nd that both noise and heterogeneity.''
+  \end{itemize}
+\end{quotation}
+
+It is unfortunate that one reviewer had difficulty reading the manuscript. None of the errors described appeared in our copy of the manuscript. They may have been caused by not all fonts being embedded in the PDF version of the document; we will ensure that the revised version has all fonts embedded.
+
+Our revised manuscript highlights the novel identification and characterization of a nonlinear interaction between noise and heterogeneity; this subject has not been explored in detail in the current literature. The added literature references make clear where our research overlaps with previous results.
+
+\ \newline
+{\large \bf Reviewer~2}
+\begin{quotation}
+  %% \itshape
+  Overall comments: This manuscript addresses an interesting and timely topic and nicely illustrates a number of specific computational advantages of populations containing neurons with heterogeneous response properties over populations whose neurons are more homogenous. Given the growing interest in the computational role of biological heterogeneity in both experimental and theoretical contexts, the work is very timely.  The manuscript would be improved by making better links to biological data and systems and 2) having detailed figures showing raw data like spike rasters rather than depending almost exclusively on summary figures.
+\end{quotation}
+
+Reviewer~2 had concerns about the connection to biological data and systems, and the omission of figures showing raw results from individual trials. We have added a significant number of references to both computational and experimental neuroscientific results, which provides a stronger connection between our research and the biological data. We have also added spike rasters to better illustrate our results on desynchronization; these spike rasters also help connect our results to biological data.
+
+\begin{quotation}
+  Specific comments:
+  The authors note that ``research into the role of heterogeneity within a group of neurons of the same type is limited (Eliasmith and Anderson (2003) is a notable exception.''  In fact the fail to mention several recent papers providing experimental evidence for heterogeneity.  Beyond the Marsat and Maler 2010 paper cited by the authors considerable work on the computational (Brody and Hopfield 2003 Neuron;  Tkacik et al 2010 PNAS; Urban and Padmanabhan 2010 nature Neuroscience) and experimental (Angelo and Margrie 2012; Nature; Urban and Padmanabhan 2010 Nature Neuroscience  Burton et al 2012 J Neurophysiol) aspects of this issue have been published.  Some of these even go beyond the current manuscript in some respects.  Effects of heterogeneity on synchrony, for example are directly addressed by (Burton et al 2012).
+\end{quotation}
+
+As previously mentioned in our response to Reviewer~1, we have added many additional references to document the connections between our work and previous work on heterogeneity. Of the above references suggested by Reviewer~2, all but one were added to the revised manuscript. A reference to Tkacik et al. (2010, PNAS) was omitted because it analyzes heterogeneity in neural connections using Ising models, and is only marginally related to our examination of heterogeneity.
+
+\begin{quotation}
+  The idea of an optimal amount of heterogeneity (at least in the low sigma case) is quite interesting (Figure 6) and this figure and discussion should be moved to the results from the discussion.  Do the authors have an explanation for why this optimum exists and why only in the low noise case?
+\end{quotation}
+
+As suggested, we moved the figure showing resonance in heterogeneity to the front of the results section. This result feeds nicely into our presentation of the conflicting benefits of noise and heterogeneity, and both results are now discussed early in the paper, including an explanation of why resonance occurs in heterogeneity, and only in the absence of noise.
+
+\begin{quotation}
+  The authors should better motivate their decision to provide all the neurons homogeneous inputs for decoding.  This will strike experimentalists as highly artificial and should be discussed.
+\end{quotation}
+
+We added a paragraph to the discussion section to motivate the use of a common input signal for all neurons. We both describe how noise and heterogeneity act to provide each neuron with a unique input current, and note several previous experiments in computational and experimental neuroscience that use a similar experimental setup.
+
+\begin{quotation}
+  The authors emphasize the ways in which noise and heterogeneity work to produce similar effects.  However, one important way in which the effects differ should be considered.  Noise can change the average activity (or response time or phase) across a population, but on a given trial, which neuron fires first or at a particular phase is random.  Heterogeneity across cells that generates the same distribution of activity values as does noise does so in a way such that the activity of a given neuron is reliable from trial to trial.  Thus downstream decoding may be based on the pattern of activity (or phase or response time) across neurons rather than only on the average value.
+\end{quotation}
+
+We added discussion of the idea that heterogeneity produces variability that remains constant from trial to trial, as opposed to variability from noise which differs between trials. We mention that more complex decoding methods could take advantage of this reproducibility, and that this is an area for future work.
+
+\begin{quotation}
+  The description desynchronizing as ``putting neurons out of phase'' with each other could be clarified.  Phase implies a degree of periodicity that, while it may be present in these simulations, using these models, seems unnecessary for the point that the authors want to make.  I would recommend describing this as ``desynchronizing'' or even calculating correlations and discussing the ``decorrelating'' effects of heterogeneity.  Given the known effects of correlation on coding and information  (e.g. Zohary and Newsome) this may be the best approach.  This point also would be helped by showing some more raw results, such as simulated spike rasters.
+\end{quotation}
+
+We modified our section on the desynchronizing effects of noise and heterogeneity to emphasize desynchronization instead of phase. We did leave some discussion of phase, because we think that viewing neurons as dynamical systems operating on a limit cycle in a phase space---with noise causing diffusion along this limit cycle---is beneficial to understanding how noise desynchronizes neurons. We also added spike rasters to these results to better illustrate the desynchronization.
+
+\begin{quotation}
+  The discussion of improved response time should consider or at least note that this effect is dependent on the sign of the noise.  That is, noise with an inhibitory bias will not decrease response time or do so only minimally.
+\end{quotation}
+
+We have removed the discussion of improved response time, as suggested by Reviewer~1.
+
+\begin{quotation}
+  The discussion of noise linearizing F-I curves should address similar previous work of several groups, including Reyes Abbott and Chance Nature Neuroscience; Kuman... Doiron PloS Comp Bio; and Prescott PNAS.
+\end{quotation}
+
+We added two of the three suggested references to previous work on the linearization of F-I curves. A reference to a paper by Litwin-Kumar and Brent Doiron (with unspecified coauthors) appearing in PLoS Computational Biology was omitted because two such papers exist (Litwin-Kumar A, Oswald A-MM, Urban NN, Doiron B (2011) and Litwin-Kumar A, Chacron MJ, Doiron B (2012)), and neither one appeared to explicitly discuss the effects of noise on stimulus-response curves.
+
+\begin{quotation}
+  The authors frequently use the phrase ``information transmission'' even when it is not clear that information is being transmitted anywhere.  I would suggest that the clarity of the MS could be improved by replacing this with other phrases such as information ``content'' or ``representation''.
+\end{quotation}
+
+References to information transmission have been replaced with references to information content or representation, to help reduce ambiguity.
+
+\begin{quotation}
+  p. 18 Discussion.  The authors point out that FHN show type II dynamics whereas LIF are type I and argue that therefore LIF are more comparable to cortical neurons.  Previous work (e.g. Tsubo et al 2007 and others) has concluded that some cortical neurons show type II phase resetting curves.  The apparent lack of a discontinuous increase in firing rate in these neurons may be due to the linearizing effects of noise around threshold.
+\end{quotation}
+
+We now mention the results of Tsubo et al. (2007), as well as similar results from Tateno et al. (2004), which may make our results in the type II FHN model applicable to cortex.
+
+\begin{quotation}
+  p. 11 Authors say that ``Noise increases response time...'' But I think that they mean decrease.
+\end{quotation}
+
+Response time is no longer discussed, so this sentence was removed.
+
+We hope that the changes detailed here address the concerns of the reviewers. We would like to thank them for their time, and for their insightful comments which have helped us improve the quality of the manuscript.
 
 \closing{Sincerely,}
- 
+
 \end{letter}
 \end{document}
