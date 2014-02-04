@@ -5,27 +5,34 @@ import scipy.io
 import scipy.signal
 import matplotlib
 import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
 
 from itertools import cycle
 
 ################################################################################
 ### setup
 
-inches_per_pt = 1. / 72.27               # Convert pt to inch
-inches_per_mm = 1. / 25.4
+# inches_per_pt = 1. / 72.27               # Convert pt to inch
+# inches_per_mm = 1. / 25.4
 
-onecol_in = 83.5 * inches_per_mm
-twocol_in = 173.5 * inches_per_mm
+# onecol_in = 83.5 * inches_per_mm
+# twocol_in = 173.5 * inches_per_mm
 
-params = {'axes.labelsize': 8,
-          'text.fontsize': 8,
-          'legend.fontsize': 8,
-          'xtick.labelsize': 8,
-          'ytick.labelsize': 8}
-plt.rcParams.update(params)
-
-textsize = 10
 usecolor = False
+textsize_title = 7
+textsize_small = 6
+textsize_mini = 5
+
+twocol_in = 4.25
+# onecol_in = 2.
+onecol_in = 0.5 * twocol_in
+
+params = {'axes.labelsize': textsize_small,
+          'text.fontsize': textsize_small,
+          'legend.fontsize': textsize_small,
+          'xtick.labelsize': textsize_small,
+          'ytick.labelsize': textsize_small}
+plt.rcParams.update(params)
 
 if usecolor:
     colors = [[0, 0, 0], [0, 0, 1], [0, 0.5, 0], [0.8, 0, 0]]
@@ -69,11 +76,16 @@ def makesubplot(x,y,plotfun,colors,widths,styles):
 
         l.set_dashes(next(styles))
 
-def titletext(s, ax=None, color='k', x_offset=0.0, y_offset=-0.01):
+def titletext(s, ax=None, color='k', x_offset=0.0, y_offset=0.0):
     if ax is None: ax = plt.gca()
-    ax.text(0.05+x_offset, 0.9-y_offset, s,
-            fontsize=textsize, color=color, transform=ax.transAxes,
-            backgroundcolor='white')
+    ax.text(0.01+x_offset, 1.05-y_offset, s,
+            fontsize=textsize_title, color=color, transform=ax.transAxes,)
+    # ax.text(0.06+x_offset, 0.88-y_offset, s,
+    #         fontsize=textsize_title, color=color, transform=ax.transAxes,)
+    #         # backgroundcolor='white')
+
+def tight_layout(top=0.94, **kwargs):
+    plt.tight_layout(pad=0.1, rect=(0,0,1,top), **kwargs)
 
 def legend(s,loc):
     plt.legend(s, loc=loc, labelspacing=0.1, frameon=False)
@@ -84,14 +96,18 @@ def legendbox(s,loc,bbox):
 def legendupperleft(s):
     legendbox(s,'upper left',(0,0.9))
 
-def floattolatex(f):
+def floattolatex(f, fstr='%0.1f'):
     logn = np.floor(np.log10(f))
     numn = f / (10**logn)
-    return r'$%0.1f \times$ $10^{%d}$' % (numn, logn)
+    return r'$%s \times$ $10^{%d}$' % (fstr % numn, logn)
 
 def floattolatex10(f):
     logn = np.log10(f)
     return r'$10^{%0.1f}$' % (logn)
+
+def floattoe(f):
+    mantissa, exp = ("%0.1e" % f).split('e')
+    return "%se%d" % (mantissa, int(exp))
 
 def make_mask(data, targs, rtol=1e-3):
     mask = np.zeros(data.shape, dtype='bool')
@@ -147,9 +163,9 @@ def infoheteroplot(lifdatafile, fhndatafile, target):
     plt.xlabel(hetero_label)
     ax.set_yticklabels([])
     titletext("FHN neurons")
-    legendbox(legendstr, 'lower left', (0,0))
+    legend(legendstr, 'upper left')
 
-    plt.tight_layout()
+    tight_layout()
     plt.savefig(target)
 
 #########################################################################################
@@ -186,7 +202,8 @@ def infocontourplot(lifdatafile, fhndatafile, target):
             cbar.set_label(zlabel)
         else:
             cs = ax.contour(bias, noise, info_mean, levels=zlevels, cmap=bw_cmap)
-            ax.clabel(cs, zlevels[::3], inline=1, fontsize=7, fmt="%0.2f")
+            ax.clabel(cs, zlevels[::3], inline=1, inline_spacing=1,
+                      fontsize=textsize_mini, fmt="%0.2f")
 
     plt.figure(7,figsize=(twocol_in,twocol_in))
     plt.clf()
@@ -219,7 +236,7 @@ def infocontourplot(lifdatafile, fhndatafile, target):
     ax.yaxis.set_visible(0)
     titletext("FHN neurons [bits/spike]")
 
-    plt.tight_layout()
+    tight_layout(top=0.97, h_pad=1)
     plt.savefig(target)
 
 ################################################################################
@@ -233,7 +250,7 @@ def infonoiseplot(lifdatafile, fhndatafile, target):
     ylims2 = [0,1.4]
     legendstr = ['LIF neurons', 'FHN neurons']
 
-    plt.figure(1,figsize=(twocol_in,0.5*twocol_in))
+    plt.figure(1,figsize=(twocol_in,onecol_in))
     plt.clf()
 
     rows = 1
@@ -269,7 +286,7 @@ def infonoiseplot(lifdatafile, fhndatafile, target):
     plt.ylabel(info_spike_label)
     titletext("B")
 
-    plt.tight_layout()
+    tight_layout()
     plt.savefig(target)
 
 ################################################################################
@@ -289,7 +306,7 @@ def phaseplot(lifphasefile, fhnphasefile, target):
         else:
             legendstr.extend( [r'$b_i \in [%0.2f,%0.2f]$' % (b,b)] )
 
-    plt.figure(2,figsize=(twocol_in,0.5*twocol_in))
+    plt.figure(2,figsize=(twocol_in,onecol_in))
     plt.clf()
     rows = 1
     cols = 2
@@ -311,7 +328,7 @@ def phaseplot(lifphasefile, fhnphasefile, target):
     yticklabels = [r'$0$', r'$\frac{1}{8}\pi$', r'$\frac{1}{4}\pi$',
                    r'$\frac{3}{8}\pi$', r'$\frac{1}{2}\pi$']
     ax.set_yticks(yticks)
-    ax.set_yticklabels(yticklabels, fontsize=10)
+    ax.set_yticklabels(yticklabels, fontsize=textsize_small+1)
 
     ####################
     ax = plt.subplot(rows,cols,fhn_ind)
@@ -325,7 +342,7 @@ def phaseplot(lifphasefile, fhnphasefile, target):
     plt.xlabel(noise_label)
     titletext("FHN neurons")
 
-    plt.tight_layout()
+    tight_layout()
     plt.savefig(target)
 
 ################################################################################
@@ -345,9 +362,13 @@ def syncrasterplot(firingfile, target):
     Nlabels = ['low\nnoise', 'moderate\nnoise', 'high\nnoise']
     Hlabels = ['low\nheterogeneity', 'moderate\nheterogeneity', 'high\nheterogeneity']
 
+    gs1 = gridspec.GridSpec(1, 1, bottom=0.75, top=0.97)
+    gs2 = gridspec.GridSpec(3, 3, bottom=0.08, top=0.71)
+
     ### plot the input signal at the top
-    ax1 = plt.subplot(rows+1, 1, 1)
+    ax1 = plt.subplot(gs1[0,0])
     ax1.plot(lifdata['t'], lifdata['S'][0], 'k-')
+    ax1.set_xlim([0, 1])
     ax1.set_ylim([-0.3, 0.3])
     ax1.set_xlabel('time [s]')
     ax1.set_ylabel('input signal')
@@ -356,7 +377,8 @@ def syncrasterplot(firingfile, target):
     ### plot the responses for various levels
     for i in xrange(rows):
         for j in xrange(cols):
-            ax = plt.subplot(rows+1, cols, (i+1)*cols + j + 1)
+            # ax = plt.subplot(rows+1, cols, (i+1)*cols + j + 1)
+            ax = plt.subplot(gs2[i,j])
 
             ### plot spikes for each neuron
             times = results[i][j]
@@ -376,7 +398,7 @@ def syncrasterplot(firingfile, target):
                 ax.set_xticklabels([])
 
             if i == 0:
-                ax.set_title(Hlabels[j], fontsize=10)
+                ax.set_title(Hlabels[j], fontsize=textsize_title)
 
             if j == cols - 1:
                 ax.set_ylabel('neuron number', labelpad=10)
@@ -387,7 +409,7 @@ def syncrasterplot(firingfile, target):
                 ax.set_yticklabels([])
 
             if j == 0:
-                ax.set_ylabel(Nlabels[i], fontsize=10, labelpad=25)
+                ax.set_ylabel(Nlabels[i], fontsize=textsize_title, labelpad=15)
                 ax.yaxis.label.set_rotation(0)
                 ax.yaxis.label.set_verticalalignment('center')
 
@@ -403,6 +425,7 @@ def syncrasterplot(firingfile, target):
     s = 0.5
     ax1.set_position([p.x0, p.y0 + (1-s)*p.height, p.width, s*p.height])
 
+    # tight_layout(top=1)
     plt.savefig(target)
 
 ################################################################################
@@ -416,6 +439,7 @@ def tuningnoisyplot(liftuningfile, fhntuningfile, target):
     ylims = [0, 30]
     xlabel = r'input signal ($s(t)$)'
     ylabel = r'output firing rate [Hz]'
+    rotation = 20
 
     def legend_string(Nstds):
         legendstr = []
@@ -423,10 +447,10 @@ def tuningnoisyplot(liftuningfile, fhntuningfile, target):
             if abs(Nstd) < 1e-8:
                 legendstr.append(r'$\sigma_\eta =$ $0$')
             else:
-                legendstr.append(r'$\sigma_\eta =$ ' + floattolatex(Nstd))
+                legendstr.append(r'$\sigma_\eta =$ $\mathrm{%s}$' % floattoe(Nstd))
         return legendstr
 
-    plt.figure(4,figsize=(twocol_in,0.5*twocol_in))
+    plt.figure(4,figsize=(twocol_in,onecol_in))
     plt.clf()
     rows, cols = (1,2)
     fhn_ind, lif_ind = (2,1)
@@ -439,6 +463,7 @@ def tuningnoisyplot(liftuningfile, fhntuningfile, target):
 
     plt.xlim(xlims)
     plt.ylim(ylims)
+    plt.xticks(rotation=rotation, fontsize=textsize_mini)
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
     titletext("LIF neurons")
@@ -452,12 +477,13 @@ def tuningnoisyplot(liftuningfile, fhntuningfile, target):
 
     plt.xlim(xlims)
     plt.ylim(ylims)
+    plt.xticks(rotation=rotation, fontsize=textsize_mini)
     plt.gca().set_yticklabels([])
     plt.xlabel(xlabel)
     titletext("FHN neurons")
     legend(legend_string(fhndata['Nstds']), 'lower right')
 
-    plt.tight_layout()
+    tight_layout()
     plt.savefig(target)
 
 ################################################################################
@@ -498,12 +524,9 @@ def tuningheteroplot(target):
 
 
     ########## Plots ##########
-    def set_dashes(line, style):
-        if len(style) > 1:
-            line.set_dashes(style)
 
     ### plot tuning curves together
-    plt.figure(figsize=(twocol_in,0.5*twocol_in))
+    plt.figure(figsize=(twocol_in,onecol_in))
     m = 1
     n = 2
 
@@ -511,11 +534,11 @@ def tuningheteroplot(target):
 
     decoder = (1./nb) * np.ones(nb)
 
-    lw = 2   # linewidth
-    lw2 = 2
+    lw = 1.5   # linewidth
+    lw2 = 1.5
 
     if usecolor:
-        styles = [[1]]*nb
+        sty = [styles[0]]
         colorhue = np.linspace(0,0.9,nb)
         colors1 = []
         colors2 = []
@@ -523,9 +546,9 @@ def tuningheteroplot(target):
             colors1.append( colorsys.hsv_to_rgb( colorhue[i], 1.0, 0.8 ) )
             colors2.append( colorsys.hsv_to_rgb( colorhue[i], 0.4, 0.8 ) )
     else:
-        styles = [[1], [4,4], [2,2]]
-        numrep = int(np.ceil(nb / len(styles)))
-        styles = styles * numrep
+        sty = [styles[0], styles[1], styles[3]]
+        numrep = int(np.ceil(nb / len(sty)))
+        sty = sty * numrep
         colors1 = [[0.4]*3]*numrep + [[0.5]*3]*numrep + [[0.6]*3]*numrep
         colors2 = colors1
 
@@ -537,12 +560,11 @@ def tuningheteroplot(target):
 
     for i in range(nb):
         l, = plt.plot(x, a[:,i], linewidth=lw2, color=colors1[i])
-        # l, = plt.plot(x, a[:,i], linewidth=lw2, color='k')
-        set_dashes(l, styles[i])
+        l.set_dashes(sty[i])
 
     plt.xlim(xlims)
     plt.ylim(ylims)
-    plt.xticks(rotation=25)
+    plt.xticks(rotation=30, fontsize=textsize_mini)
 
     plt.xlabel('input signal')
     plt.ylabel('firing rate [Hz]')
@@ -557,14 +579,15 @@ def tuningheteroplot(target):
         mask = (x - bth[i] >= -0.01)
         l, = plt.plot(x[mask], np.dot(decodermod, a.T)[mask],
                      color=colors2[i], linewidth=lw2)
-        set_dashes(l, styles[i])
+        l.set_dashes(sty[i])
         decodermod[i] = 0
 
     # dotted line on top
-    plt.plot(x, np.dot(decoder,a.T), linestyle='-', color='black', linewidth=lw)
+    plt.plot(x, np.dot(decoder,a.T), linestyle='-', color='k', linewidth=lw)
 
     # reference tuning curve
-    plt.plot(x, a[:,0], linestyle='--', color='black', linewidth=lw)
+    l, = plt.plot(x, a[:,0], color='k', linewidth=lw)
+    l.set_dashes(styles[1])
 
     # reference line
     pt1 = np.array([-0.15,0])
@@ -573,16 +596,16 @@ def tuningheteroplot(target):
 
     refline = ptdiff[1]/ptdiff[0] * (x - pt1[0]) + pt1[1]
     refline[x < pt1[0]] = pt1[1]
-    l, = plt.plot(x,refline,linewidth=lw,linestyle='-.',color='black')
-    l.set_dashes([6,4,2,4])
+    l, = plt.plot(x, refline, linewidth=lw, color='k')
+    l.set_dashes(styles[2])
 
     plt.xlim(xlims)
     plt.ylim(ylims)
-    plt.xticks(rotation=25)
+    plt.xticks(rotation=30, fontsize=textsize_mini)
 
     plt.xlabel('input signal')
     plt.ylabel('population firing rate [Hz]')
     titletext('Population response')
 
-    plt.tight_layout()
+    tight_layout()
     plt.savefig(target)

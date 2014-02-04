@@ -41,7 +41,7 @@
 
 \usepackage{nameref}
 
-\graphicspath{{../figures/bw/}}
+\graphicspath{{../figures/}}
 %% \newcommand{\hidefigures}{\relax}
 
 \begin{document}
@@ -149,7 +149,7 @@ The experimental setup is summarized in Figure~\ref{fig:exp}; see \textsc{\namer
 \begin{figure}
   \ifx\hidefigures\undefined
     \centering
-    \includegraphics{experiment.eps}
+    \includegraphics{figure1_experiment.pdf}
   \fi
   \caption{
     \textbf{The experimental setup.} In our experiment, neurons are fed a common aperiodic input. Each neuron also has an independent white noise process and a randomly chosen bias that are added to the input. Varying the amplitude of the noise and the width of the interval from which the biases are randomly drawn allows us to control the amount of noise and heterogeneity in the experiment, respectively. Additionally, some ``off'' neurons invert their input (not shown). The output of each FHN or LIF neuron model is summed and filtered to produce the population output; this is compared with the input signal using mutual information as a metric.
@@ -162,7 +162,7 @@ Figure~\ref{fig:infohetero} summarizes the effect of neuronal heterogeneity on t
 \begin{figure}
   \ifx\hidefigures\undefined
     \centering
-    \includegraphics[width=\textwidth]{../figures/bw/infohetero.eps}
+    \includegraphics[width=\textwidth]{figure2_infohetero.pdf}
   \fi
   \caption{
     \textbf{Heterogeneity increases information content of a population of neurons, and exhibits a resonance effect.}
@@ -199,7 +199,7 @@ However, if we choose the optimal levels of noise and heterogeneity in the absen
 \begin{figure}
   \ifx\hidefigures\undefined
     \centering
-    \includegraphics[width=\textwidth]{../figures/bw/infocontour.eps}
+    \includegraphics[width=\textwidth]{figure3_infocontour.pdf}
   \fi
   \caption{
     \textbf{The benefits of noise and heterogeneity to information representation are not independent.}
@@ -225,7 +225,7 @@ indicating that noise benefits neural systems partly through increasing firing r
 \begin{figure}
   \ifx\hidefigures\undefined
     \centering
-    \includegraphics[width=\textwidth]{../figures/bw/infonoise.eps}
+    \includegraphics[width=\textwidth]{figure4_infonoise.pdf}
   \fi
   \caption{
     \textbf{Noise increases information content of homogeneous populations of FHN and LIF neurons.} A) In homogeneous populations, noise exhibits a resonance effect on information content. B) The resonance effect of noise is less pronounced when measuring the information rate, indicating that noise operates partially by increasing firing rates.
@@ -246,7 +246,7 @@ Adding independent noise to each neuron desynchronizes the firing events of the 
 \begin{figure}
   \ifx\hidefigures\undefined
     \centering
-    \includegraphics[width=\textwidth]{../figures/bw/phase.eps}
+    \includegraphics[width=\textwidth]{figure5_phase.pdf}
   \fi
   \caption{
     \textbf{Noise and heterogeneity both desynchronize neurons.} To measure whether noise and heterogeneity have a desynchronizing effect on populations of neurons, we measured the standard deviation of neuron phases across the population (see \textsc{\nameref{scn:methods}}), where a smaller standard deviation indicates increased synchronization. Heterogeneity is seen to significantly desynchronize both FHN and LIF neurons, specifically across low to moderate levels of noise. At high levels of noise, the noise itself is sufficient to desynchronize neurons, and additional heterogeneity has no effect.
@@ -257,7 +257,7 @@ Adding independent noise to each neuron desynchronizes the firing events of the 
 \begin{figure}
   \ifx\hidefigures\undefined
     \centering
-    \includegraphics[width=\textwidth]{../figures/bw/syncraster.eps}
+    \includegraphics[width=\textwidth]{figure6_syncraster.pdf}
   \fi
   \caption{
     \textbf{The effects of noise and heterogeneity on LIF neuron firing.}
@@ -300,7 +300,7 @@ This result has been previously observed and extensively studied \citep{Stocks19
 \begin{figure}
   \ifx\hidefigures\undefined
     \centering
-    \includegraphics[width=\textwidth]{../figures/bw/tuningnoisy.eps}
+    \includegraphics[width=\textwidth]{figure7_tuningnoisy.pdf}
   \fi
   \caption{
     \textbf{Noise linearizes neuron tuning curves.}
@@ -319,7 +319,7 @@ Neuron heterogeneity has a linearizing effect similar to adding noise to a popul
 \begin{figure}
   \ifx\hidefigures\undefined
     \centering
-    \includegraphics[width=\textwidth]{../figures/bw/tuninghetero.eps}
+    \includegraphics[width=\textwidth]{figure8_tuninghetero.pdf}
   \fi
   \caption{
     \textbf{Heterogeneity linearizes the response of a neuronal population to a stimulus.} A) Tuning curves for a heterogeneous population of $N = 9$ neurons. B) The population response of the heterogeneous population (heavy solid line) is much closer to a linear response (heavy dot-dashed line) than a single LIF tuning curve (heavy dashed line), even though the heterogeneous thresholds are far from evenly spaced.
