@@ -2,6 +2,7 @@
 import numpy as np
 import numpy.random as npr
 
+
 def equalpower(dt, t_final, max_freq, mean=0.0, std=1.0, n=None):
     """Generate a random signal with equal power below a maximum frequency
 
@@ -77,6 +78,7 @@ def lowpass_white(dt, t_final, tau, mean=0.0, std=1.0, n=None):
     if vector_out: return x.flatten()
     else:          return x
 
+
 def alpha_white(dt, t_final, tau, mean=0.0, std=1.0, n=None):
     """White noise filtered with the alpha function.
 
@@ -91,11 +93,9 @@ def alpha_white(dt, t_final, tau, mean=0.0, std=1.0, n=None):
     v = dt / tau
     e2v = np.exp(2*v)
     sigma = std / (v * dt) / np.sqrt(e2v*(e2v + 1)/(e2v - 1)**3)
-    # u = np.random.normal(size=(n, nt+2), scale=sigma)
     u = np.random.normal(size=(nt+2, n), scale=sigma)
 
     ### filter white noise
-    # x = np.zeros((n, nt))
     x = np.zeros((nt, n))
     x0 = np.random.normal(size=n, scale=std)
     x1 = x0.copy()
@@ -111,9 +111,6 @@ def alpha_white(dt, t_final, tau, mean=0.0, std=1.0, n=None):
                    tau/alpha**2 * (u[i+2,:] + 2*u[i+1,:] + u[i,:]))
         x1, x0 = x[i,:], x1
 
-    # if mean != 0:
-    #     x += mean
-
     ### fully normalize
     # x *= (std / x.std(-1))[...,None]
     # x += (mean - x.mean(-1))[...,None]
@@ -123,77 +120,3 @@ def alpha_white(dt, t_final, tau, mean=0.0, std=1.0, n=None):
 
     if vector_out: return x.flatten()
     else:          return x
-
-def lowpass_white_conv(dt, t_final, tau, mean=0.0, std=1.0, n=None):
-    vector_out = n is None
-    n = 1 if n is None else n
-
-    ### make white noise
-    nt = int(np.round(t_final / dt))
-    S = np.random.normal(size=(n, nt), scale=std*np.sqrt(2*tau/dt))
-    # S = np.random.normal(size=(n, nt), scale=std*2*np.sqrt(tau/dt))
-
-    ### filter white noise
-    t = dt * np.arange(np.round(5*tau / dt))
-    e = (dt / tau) * np.exp(-t / tau)
-
-    # t = dt * np.arange(np.round(7*tau / dt))
-    # e = t * (dt / tau) * np.exp(-t / tau)
-    # e /= e.sum()
-    # print e.sum()
-
-    for i in range(len(S)):
-        S[i] = np.convolve(S[i], e, mode='full')[:nt]
-
-    if vector_out: return S.flatten()
-    else:          return S
-
-def test_lowpass_white():
-    import matplotlib.pyplot as plt
-    # from util.timing import tic, toc
-
-    dt = 1e-3
-    t_final = 10.0
-    tau = 10e-3
-    # s = lowpass_white(dt, t_final, tau, n=100)
-    # s = lowpass_white2(dt, t_final, tau, std=1.0, n=100)
-    s = alpha_white(dt, t_final, tau, n=1000)
-    t = dt * np.arange(s.shape[1])
-    f = (1. / t_final) * np.arange(s.shape[1])
-    print "mean", s.mean(), s.mean(1).std()
-    print "std", s.std(1).mean()
-    print "std0", s[:,t < 0.01].std(0).mean(), "std1", s[:,t > 5].std(0).mean()
-
-    F = np.fft.fft(s, axis=1)
-    Am = np.abs(F).mean(0)
-    y = np.fft.ifft(F * F.conj(), axis=1)
-    ym = y.mean(0)
-
-    plt.figure()
-    r, c = 1, 3
-    plt.subplot(r,c,1)
-    plt.plot(t[t < 1], s[0][t < 1])
-    plt.subplot(r,c,2)
-    plt.plot(t[t < 5*tau], ym[t < 5*tau] / ym[0])
-    plt.subplot(r,c,3)
-    nyq = 0.5/dt
-    plt.semilogx(f[f < nyq], Am[f < nyq] / Am[1])
-    plt.show()
-
-def test_alpha_white():
-    from util.timing import tic, toc
-
-    dt = 0.1e-3
-    t_final = 5.0
-    tau = 20e-3
-    tic()
-    s = alpha_white(dt, t_final, tau, mean=0.05, std=0.1, n=1000)
-    toc()
-    print "mean", s.mean(), s.mean(1).std()
-    print "std", s.std(1).mean(), s.std(1).std()
-    # print "std0", s[:,t < 0.01].std(0).mean(), "std1", s[:,t > 5].std(0).mean()
-
-
-if __name__ == '__main__':
-    # test_lowpass_white()
-    test_alpha_white()
