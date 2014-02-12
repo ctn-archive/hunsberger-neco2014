@@ -1,7 +1,6 @@
 
 import numpy as np
 import scipy as sp
-import scipy.io
 import scipy.signal
 import matplotlib
 import matplotlib.pyplot as plt
@@ -302,9 +301,9 @@ def phaseplot(lifphasefile, fhnphasefile, target):
     for b, b2 in zip(lifdata['bths'], fhndata['bths']):
         assert b == b2
         if abs(b) < 1e-8:
-            legendstr.extend( [r'$b_i =$ $0$'] )
+            legendstr.extend( [r'$b_r =$ $0$'] )
         else:
-            legendstr.extend( [r'$b_i \in [%0.2f,%0.2f]$' % (b,b)] )
+            legendstr.extend( [r'$b_r =$ $%0.2f$' % b] )
 
     plt.figure(2,figsize=(twocol_in,onecol_in))
     plt.clf()
@@ -388,7 +387,7 @@ def syncrasterplot(firingfile, target):
             for t in times:
                 lines = ax.plot(t, height*np.ones(len(t)), 'k|')
                 lines[0].set_markersize(1)
-                lines[0].set_markeredgewidth(2)
+                lines[0].set_markeredgewidth(1)
                 height += 1
 
             if i == len(Nstds) - 1:

@@ -1,14 +1,27 @@
 
+import os
+
+from doit import get_var
 from doit.action import CmdAction
 
 figure_extension = '.pdf'
 
+### Process arguments
+gpu = get_var('gpu', 'False')
+if gpu in ['1', 'true', 'True']:
+    os.environ['THEANO_FLAGS'] = 'device=gpu,floatX=float32'
+elif gpu not in ['0', 'false', 'False']:
+    raise ValueError("Unrecognized value '%s' for parameter 'gpu'" % gpu)
+
+
+### Helper functions
 def _result(task, model):
-    return 'results/%s_%s.npz' % (task, model)
+    return os.path.join('results', '%s_%s.npz' % (task, model))
 
 
 def _figure(number, task):
-    return 'figures/figure%d_%s%s' % (number, task, figure_extension)
+    return os.path.join(
+        'figures', 'figure%d_%s%s' % (number, task, figure_extension))
 
 
 def _simulate(task, func, model):
@@ -26,13 +39,14 @@ def _plot(num, task, func, deps):
     target = _figure(num, task)
     return {'basename': 'plot_%s' % (task),
             'actions': [(func, [target])],
-            'file_dep': deps + ['scripts/makefigures.py'],
+            'file_dep': deps + [os.path.join('scripts', 'makefigures.py')],
             'targets': [target],
             'doc': "Generate figure %d: %s" % (num, task),
             'clean': True,
             }
 
 
+### Tasks
 def task_sim_info():
     """Run simulations for information plots"""
     def sim_info(model, save_name):
@@ -134,8 +148,8 @@ def task_plot_tuninghetero():
 def task_paper():
     """Generate a PDF of the paper using pdflatex"""
     pdf = CmdAction(
-        'pdflatex -interaction=batchmode manuscript.tex', cwd='paper/')
+        'pdflatex -interaction=batchmode manuscript.tex', cwd='paper')
     return {'actions': [pdf, pdf, pdf],
-            'file_dep': ['paper/manuscript.tex'],
-            'targets': ['paper/manuscript.pdf'],
+            'file_dep': [os.path.join('paper', 'manuscript.tex')],
+            'targets': [os.path.join('paper', 'manuscript.pdf')],
             'clean': True}
