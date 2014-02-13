@@ -7,11 +7,23 @@ from doit.action import CmdAction
 figure_extension = '.pdf'
 
 ### Process arguments
-gpu = get_var('gpu', 'False')
-if gpu in ['1', 'true', 'True']:
+def _get_boolean_argument(name, default=None):
+    value = get_var(name, default)
+    if default is None and value is None:
+        raise ValueError("Required argument '%s' not provided" % name)
+
+    value = str(value).lower()
+    if value in ['1', 'true', 'yes', 'y', True]:
+        return True
+    if value in ['0', 'false', 'no', 'n', False]:
+        return False
+    raise ValueError(
+        "Unrecognized value '%s' for parameter '%s'" % (value, name))
+
+
+gpu = _get_boolean_argument('gpu', False)
+if gpu:
     os.environ['THEANO_FLAGS'] = 'device=gpu,floatX=float32'
-elif gpu not in ['0', 'false', 'False']:
-    raise ValueError("Unrecognized value '%s' for parameter 'gpu'" % gpu)
 
 
 ### Helper functions
@@ -147,8 +159,13 @@ def task_plot_tuninghetero():
 
 def task_paper():
     """Generate a PDF of the paper using pdflatex"""
+    command = ""
+    if not _get_boolean_argument('figures', True):
+        command += "\\newcommand{\\hidefigures}{\\relax}"
+    command += "\\input{manuscript.tex}"
+
     pdf = CmdAction(
-        'pdflatex -interaction=batchmode manuscript.tex', cwd='paper')
+        'pdflatex -interaction=batchmode "%s"' % command, cwd='paper')
     return {'actions': [pdf, pdf, pdf],
             'file_dep': [os.path.join('paper', 'manuscript.tex')],
             'targets': [os.path.join('paper', 'manuscript.pdf')],

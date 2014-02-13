@@ -1,4 +1,3 @@
-===================
 hunsberger-neco2014
 ===================
 
@@ -14,7 +13,7 @@ paper or the code, please contact Eric Hunsberger at <ehunsber@uwaterloo.ca>.
 
 
 Requirements
-============
+------------
 
 The core requirement for this repository is Python 2.7. Python requirements
 can be found in `requirements.txt`, and can be installed using `pip` with
@@ -30,7 +29,7 @@ a `pdflatex` command at the command-line.
 
 
 `doit` usage
-============
+------------
 
 All the scripts in this project, namely those for running the simulations,
 creating the figures, and putting together the paper, have been set up to
@@ -69,7 +68,7 @@ This requires Theano to work with your GPU (see the first paragraphs of
 
 
 Scripts
-=======
+-------
 
 The `scripts` folder contains all the source code for conducting the numerical
 experiments, as well as code for generating the plots.
