@@ -28,9 +28,15 @@
 % Different font in captions
 \newcommand{\captionfonts}{\normalsize}
 
+\ifx\hidefigures\undefined
+  \newcommand{\captionbaseline}{1} % EH: compress captions if we have figures
+\else
+  \newcommand{\captionbaseline}{2}
+\fi
+
 \makeatletter
 \long\def\@makecaption#1#2{%
-  \renewcommand{\baselinestretch}{1}% EH: stop captions running off the bottom of the page
+  \renewcommand{\baselinestretch}{\captionbaseline}
   \vskip\abovecaptionskip
   \sbox\@tempboxa{{\captionfonts #1: #2}}%
   \ifdim \wd\@tempboxa >\hsize
@@ -153,6 +159,8 @@ The experimental setup is summarized in Figure~\ref{fig:exp}; see \textsc{\namer
   \ifx\hidefigures\undefined
     \centering
     \includegraphics{figure1_experiment.pdf}
+  \else
+    INSERT FIGURE 1 HERE
   \fi
   \caption{
     \textbf{The experimental setup.} In our experiment, neurons are fed a common aperiodic input. Each neuron also has an independent white noise process and a randomly chosen bias that are added to the input. Varying the amplitude of the noise and the width of the interval from which the biases are randomly drawn allows us to control the amount of noise and heterogeneity in the experiment, respectively. Additionally, some ``off'' neurons invert their input (not shown). The output of each FHN or LIF neuron model is summed and filtered to produce the population output; this is compared with the input signal using mutual information as a metric.
@@ -166,6 +174,8 @@ Figure~\ref{fig:infohetero} summarizes the effect of neuronal heterogeneity on t
   \ifx\hidefigures\undefined
     \centering
     \includegraphics[width=\textwidth]{figure2_infohetero.pdf}
+  \else
+    INSERT FIGURE 2 HERE
   \fi
   \caption{
     \textbf{Heterogeneity increases information content of a population of neurons, and exhibits a resonance effect.}
@@ -203,6 +213,8 @@ However, if we choose the optimal levels of noise and heterogeneity in the absen
   \ifx\hidefigures\undefined
     \centering
     \includegraphics[width=\textwidth]{figure3_infocontour.pdf}
+  \else
+    INSERT FIGURE 3 HERE
   \fi
   \caption{
     \textbf{The benefits of noise and heterogeneity to information representation are not independent.}
@@ -229,6 +241,8 @@ indicating that noise benefits neural systems partly through increasing firing r
   \ifx\hidefigures\undefined
     \centering
     \includegraphics[width=\textwidth]{figure4_infonoise.pdf}
+  \else
+    INSERT FIGURE 4 HERE
   \fi
   \caption{
     \textbf{Noise increases information content of homogeneous populations of FHN and LIF neurons.} A) In homogeneous populations, noise exhibits a resonance effect on information content. B) The resonance effect of noise is less pronounced when measuring the information rate, indicating that noise operates partially by increasing firing rates.
@@ -250,6 +264,8 @@ Adding independent noise to each neuron desynchronizes the firing events of the 
   \ifx\hidefigures\undefined
     \centering
     \includegraphics[width=\textwidth]{figure5_phase.pdf}
+  \else
+    INSERT FIGURE 5 HERE
   \fi
   \caption{
     \textbf{Noise and heterogeneity both desynchronize neurons.} To measure whether noise and heterogeneity have a desynchronizing effect on populations of neurons, we measured the standard deviation of neuron phases across the population (see \textsc{\nameref{scn:methods}}), where a smaller standard deviation indicates increased synchronization. Heterogeneity (individual traces) is seen to significantly desynchronize both FHN and LIF neurons, specifically across low to moderate levels of noise. At high levels of noise, the noise itself is sufficient to desynchronize neurons, and additional heterogeneity has no effect.
@@ -261,6 +277,8 @@ Adding independent noise to each neuron desynchronizes the firing events of the 
   \ifx\hidefigures\undefined
     \centering
     \includegraphics[width=\textwidth]{figure6_syncraster.pdf}
+  \else
+    INSERT FIGURE 6 HERE
   \fi
   \caption{
     \textbf{The effects of noise and heterogeneity on LIF neuron firing.}
@@ -342,6 +360,8 @@ This result has been previously observed and extensively studied \citep{Stocks19
   \ifx\hidefigures\undefined
     \centering
     \includegraphics[width=\textwidth]{figure7_tuningnoisy.pdf}
+  \else
+    INSERT FIGURE 7 HERE
   \fi
   \caption{
     \textbf{Noise linearizes neuron tuning curves.}
@@ -382,6 +402,8 @@ and reappears in the recent heterogeneity literature \citep{Angelo2012}.
   \ifx\hidefigures\undefined
     \centering
     \includegraphics[width=\textwidth]{figure8_tuninghetero.pdf}
+  \else
+    INSERT FIGURE 8 HERE
   \fi
   \caption{
     \textbf{Heterogeneity linearizes the response of a neuronal population to a stimulus.} A) Tuning curves for a heterogeneous population of $N = 9$ neurons. B) The population response of the heterogeneous population (heavy solid line) is much closer to a linear response (heavy dot-dashed line) than a single LIF tuning curve (heavy dashed line), even though the heterogeneous thresholds are far from evenly spaced.
@@ -552,7 +574,7 @@ Brody, C.~D. and Hopfield, J.~J. (2003).
 Burton, S.~D., Ermentrout, G.~B., and Urban, N.~N. (2012).
 \newblock {Intrinsic heterogeneity in oscillatory dynamics limits
   correlation-induced neural synchronization.}
-\newblock {\em Journal of neurophysiology}, 108(8):2115--33.
+\newblock {\em Journal of Neurophysiology}, 108(8):2115--33.
 
 \bibitem[Chance et~al., 2002]{Chance2002}
 Chance, F.~S., Abbott, L.~F., and Reyes, A.~D. (2002).
@@ -591,13 +613,13 @@ Eliasmith, C. and Anderson, C.~H. (2003).
 Fitzhugh, R. (1961).
 \newblock {Impulses and physiological states in theoretical models of nerve
   membrane}.
-\newblock {\em Biophysical journal}, 1(1948):445--466.
+\newblock {\em Biophysical Journal}, 1(1948):445--466.
 
 \bibitem[Gal\'{a}n et~al., 2008]{Galan2008}
 Gal\'{a}n, R.~F., Ermentrout, G.~B., and Urban, N.~N. (2008).
 \newblock {Optimal time scale for spike-time reliability: theory, simulations,
   and experiments.}
-\newblock {\em Journal of neurophysiology}, 99(1):277--83.
+\newblock {\em Journal of Neurophysiology}, 99(1):277--83.
 
 \bibitem[Gammaitoni et~al., 1998]{Gammaitoni1998}
 Gammaitoni, L., H\"{a}nggi, P., Jung, P., and Marchesoni, F. (1998).
@@ -614,7 +636,7 @@ Heneghan, C., Chow, C., Collins, J.~J., Imhoff, T.~T., Lowen, S.~B., and Teich,
 Hubel, D. and Wiesel, T. (1962).
 \newblock {Receptive fields, binocular interaction and functional architecture
   in the cat's visual cortex}.
-\newblock {\em The Journal of physiology}, 160:106--154.
+\newblock {\em The Journal of Physiology}, 160:106--154.
 
 \bibitem[Izhikevich and FitzHugh, 2006]{Izhikevich2006}
 Izhikevich, E.~M. and FitzHugh, R. (2006).
@@ -641,7 +663,7 @@ Mainen, Z.~F. and Sejnowski, T.~J. (1995).
 Marsat, G. and Maler, L. (2010).
 \newblock {Neural heterogeneity and efficient population codes for
   communication signals.}
-\newblock {\em Journal of neurophysiology}, 104(5):2543--55.
+\newblock {\em Journal of Neurophysiology}, 104(5):2543--55.
 
 \bibitem[Mato and Samengo, 2008]{Mato2008}
 Mato, G. and Samengo, I. (2008).
@@ -700,7 +722,7 @@ Prescott, S.~a. and {De Koninck}, Y. (2002).
 \bibitem[Salinas and Abbott, 1994]{Salinas1994}
 Salinas, E. and Abbott, L. (1994).
 \newblock {Vector reconstruction from firing rates}.
-\newblock {\em Journal of computational neuroscience}, 1(1):89--107.
+\newblock {\em Journal of Computational Neuroscience}, 1(1):89--107.
 
 \bibitem[Shamir and Sompolinsky, 2006]{Shamir2006}
 Shamir, M. and Sompolinsky, H. (2006).
@@ -717,7 +739,7 @@ Shu, Y., Hasenstaub, A., Badoual, M., Bal, T., and McCormick, D.~a. (2003).
 Stocks, N.~G. (2000).
 \newblock {Suprathreshold stochastic resonance in multilevel threshold
   systems}.
-\newblock {\em Physical review letters}, 84(11):2310--3.
+\newblock {\em Physical Review Letters}, 84(11):2310--3.
 
 \bibitem[Stocks, 2001]{Stocks2001a}
 Stocks, N.~G. (2001).
@@ -740,18 +762,18 @@ Stocks, N.~G., Stein, N., Short, H., Mannella, R., Luchinsky, D., McClintock,
 Tateno, T., Harsch, a., and Robinson, H. P.~C. (2004).
 \newblock {Threshold firing frequency-current relationships of neurons in rat
   somatosensory cortex: type 1 and type 2 dynamics.}
-\newblock {\em Journal of neurophysiology}, 92(4):2283--94.
+\newblock {\em Journal of Neurophysiology}, 92(4):2283--94.
 
 \bibitem[Tomita et~al., 1974]{Tomita1974}
 Tomita, K., Ohta, T., and Tomita, H. (1974).
 \newblock {Irreversible circulation and orbital revolution}.
-\newblock {\em Prog. Theor. Phys}, 52(6):1744--1765.
+\newblock {\em Progress of Theoretical Physics}, 52(6):1744--1765.
 
 \bibitem[Tsubo et~al., 2007]{Tsubo2007}
 Tsubo, Y., Takada, M., Reyes, A.~D., and Fukai, T. (2007).
 \newblock {Layer and frequency dependencies of phase response properties of
   pyramidal neurons in rat motor cortex.}
-\newblock {\em The European journal of neuroscience}, 25(11):3429--41.
+\newblock {\em European Journal of Neuroscience}, 25(11):3429--41.
 
 \bibitem[Ward et~al., 2010]{Ward2010}
 Ward, L.~M., MacLean, S.~E., and Kirschner, A. (2010).
