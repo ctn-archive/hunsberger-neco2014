@@ -1,7 +1,8 @@
 %%%%% options, to be defined externally
 %% \newcommand{\hidefigures}{\relax}
 
-\documentclass[12pt]{article}
+\documentclass[letterpaper,11pt]{article}
+
 \usepackage{amsmath}
 \usepackage{times}
 \usepackage{graphicx}
@@ -9,72 +10,69 @@
 \usepackage{multirow}
 
 \usepackage[authoryear]{natbib}
+\usepackage{nameref}
 
 \usepackage{rotating}
 \usepackage{bbm}
 \usepackage{latexsym}
 
-%%% margins
-\textheight 23.4cm
-\textwidth 14.65cm
-\oddsidemargin 0.375in
-\evensidemargin 0.375in
-\topmargin  -0.55in
+\usepackage{url}
+\renewcommand*{\UrlFont}{\ttfamily\small\relax}
 
-\renewcommand{\baselinestretch}{2}
-
-\interfootnotelinepenalty=10000
-
-% Different font in captions
-\newcommand{\captionfonts}{\normalsize}
-
-\ifx\hidefigures\undefined
-  \newcommand{\captionbaseline}{1} % EH: compress captions if we have figures
-\else
-  \newcommand{\captionbaseline}{2}
-\fi
-
-\makeatletter
-\long\def\@makecaption#1#2{%
-  \renewcommand{\baselinestretch}{\captionbaseline}
-  \vskip\abovecaptionskip
-  \sbox\@tempboxa{{\captionfonts #1: #2}}%
-  \ifdim \wd\@tempboxa >\hsize
-    {\captionfonts #1: #2\par}
-  \else
-    \hbox to\hsize{\hfil\box\@tempboxa\hfil}%
-  \fi
-  \vskip\belowcaptionskip}
-\makeatother
-%%%%%
-
-\usepackage{nameref}
+\usepackage[top=1in, bottom=1in, left=1.5in, right=1.5in]{geometry}
 
 \graphicspath{{../figures/}}
 
+% Why does higher tolerance stop the overfull lines? But it does!
+\tolerance=10000
+
+\newcommand{\horrule}[1]{\rule{\linewidth}{#1}} 	% Horizontal rule
+
+\title{
+  \vspace{-0.5in}
+  \horrule{3pt} \\[0.4cm]
+  \bf The competing benefits of noise and heterogeneity\\in neural coding
+  \horrule{1pt}
+}
+
+\newcommand{\makeauthor}[5]{
+  \normalsize
+  \begin{tabular}{c}
+    \bf #1\\
+    #2\\
+    #3\\
+    #4\\
+    #5
+  \end{tabular}
+}
+
+\author{
+  \hspace{-1em}
+  \makeauthor{Eric Hunsberger}
+             {Computational Neuroscience Research Group}
+             {University of Waterloo}
+             {Waterloo, ON, Canada}
+             {\url{ehunsber@uwaterloo.ca}}
+  \makeauthor{Matthew Scott}
+             {Department of Applied Mathematics}
+             {University of Waterloo}
+             {Waterloo, ON, Canada}
+             {\relax} \\ \\
+  \hspace{-1em}
+  \makeauthor{Chris Eliasmith}
+             {Computational Neuroscience Research Group}
+             {University of Waterloo}
+             {Waterloo, ON, Canada}
+             {}
+}
+
+\date{\today}
+
+
 \begin{document}
-\hspace{13.9cm}
 
-\ \vspace{20mm}\\
+\maketitle
 
-{\LARGE The competing benefits of noise and heterogeneity in neural coding}
-
-\ \\
-{\bf \large Eric Hunsberger$^{1*}$, Matthew Scott$^2$, Chris Eliasmith$^1$}\\
-{$^1$Centre for Theoretical Neuroscience, University of Waterloo, Waterloo, Canada.}\\
-{$^2$Department of Applied Mathematics, University of Waterloo, Waterloo, Canada.}\\
-{$^*$Corresponding author: ehunsber@uwaterloo.ca}\\
-%
-
-%\ \\[-2mm]
-{\bf Keywords:} Heterogeneity; stochastic resonance; population coding
-
-\thispagestyle{empty}
-\markboth{}{NC instructions}
-%
-\ \vspace{-0mm}\\
-%
-%Abstract
 \begin{center} {\bf Abstract} \end{center}
 
 Noise and heterogeneity are both known to benefit neural coding.
@@ -108,6 +106,10 @@ The simulations detailed in this paper
 highlight the importance of heterogeneity and noise in population coding,
 demonstrate their complex interactions in terms of the information content of neurons,
 and explain these effects in terms of underlying mechanisms.
+
+{\bf Keywords:} Heterogeneity; stochastic resonance; population coding
+
+{\bf Source code:} \url{https://github.com/ctn-archive/hunsberger-neco2014}
 
 %%%%%%%%%%%
 
@@ -186,29 +188,6 @@ Figure~\ref{fig:infohetero} summarizes the effect of neuronal heterogeneity on t
 
 Higher levels of noise reduce or completely eliminate the benefits offered by heterogeneity (Figure~\ref{fig:infohetero}). To examine the interactions between noise and heterogeneity further, we conducted the same experiment across a wide range of noise and heterogeneity values. Figure~\ref{fig:infocontour} illustrates the effects of these interactions on the information content of a population of LIF or FHN neurons. We measured both the absolute information content (in bits) and the information content per spike, or information rate (in bits per spike).
 
-LIF neurons are best able to represent the input signal
-with a moderate amount of heterogeneity ($b_r \approx 1.5 \times 10^{-1}$)
-and no noise ($\sigma_\eta = 1.0 \times 10^{-4}$).
-This was true when measuring both the absolute information content and the information per spike.
-FHN neurons, on the other hand, required both heterogeneity and noise
-to achieve maximum information content,
-because heterogeneity alone is not able to fully desynchronize FHN neurons (see \textsc{\nameref{scn:desync}}).
-However, heterogeneity alone was able to maximize the information rate of the system.
-
-We explain this difference between the information content and information rate of FHN neurons
-with the fact that noise increases the firing rates of neurons.
-While noise offers some benefit to the information content of a population of FHN neurons
-(given an optimal level of heterogeneity),
-this effect disappears when examining information per spike,
-since noise also increases the number of spikes.
-In Figure~\ref{fig:infonoise}, we examine more closely the effects of noise on information content and rate in the absence of heterogeneity. Noise shows a clear resonance effect when measuring the absolute information content of the population, but this resonance effect is reduced when measuring the information per spike. We conclude that noise operates partially by increasing the firing rates of neurons, and indeed this effect can be observed when measuring the tuning curves of neurons under noise (see Figure~\ref{fig:tuning}).
-
-The information landscapes of Figure~\ref{fig:infocontour} demonstrate that the effects of noise and heterogeneity are not independent. This is most apparent when examining the absolute information content of LIF populations (top left), and the information rate of FHN populations (bottom right).
-For example, LIF neurons show a resonance in heterogeneity in the absence of noise,
-but they also show a resonance in noise in the absence of heterogeneity (see also Figure~\ref{fig:infonoise}).
-However, if we choose the optimal levels of noise and heterogeneity in the absence of the other factor ($\sigma_\eta \approx 10^{-2}$ and $b_r \approx 2 \times 10^{-1}$), this combined level of noise and heterogeneity does not further increase the information content of the system. This indicates that the effects of noise and heterogeneity are not independent: the optimal level of noise depends on the level of heterogeneity, and vice versa.
-
-
 \begin{figure}
   \ifx\hidefigures\undefined
     \centering
@@ -237,6 +216,23 @@ indicating that noise benefits neural systems partly through increasing firing r
   \label{fig:infocontour}
 \end{figure}
 
+LIF neurons are best able to represent the input signal
+with a moderate amount of heterogeneity ($b_r \approx 1.5 \times 10^{-1}$)
+and no noise ($\sigma_\eta = 1.0 \times 10^{-4}$).
+This was true when measuring both the absolute information content and the information per spike.
+FHN neurons, on the other hand, required both heterogeneity and noise
+to achieve maximum information content,
+because heterogeneity alone is not able to fully desynchronize FHN neurons (see \textsc{\nameref{scn:desync}}).
+However, heterogeneity alone was able to maximize the information rate of the system.
+
+We explain this difference between the information content and information rate of FHN neurons
+with the fact that noise increases the firing rates of neurons.
+While noise offers some benefit to the information content of a population of FHN neurons
+(given an optimal level of heterogeneity),
+this effect disappears when examining information per spike,
+since noise also increases the number of spikes.
+In Figure~\ref{fig:infonoise}, we examine more closely the effects of noise on information content and rate in the absence of heterogeneity. Noise shows a clear resonance effect when measuring the absolute information content of the population, but this resonance effect is reduced when measuring the information per spike. We conclude that noise operates partially by increasing the firing rates of neurons, and indeed this effect can be observed when measuring the tuning curves of neurons under noise (see Figure~\ref{fig:tuning}).
+
 \begin{figure}
   \ifx\hidefigures\undefined
     \centering
@@ -249,6 +245,11 @@ indicating that noise benefits neural systems partly through increasing firing r
   }
   \label{fig:infonoise}
 \end{figure}
+
+The information landscapes of Figure~\ref{fig:infocontour} demonstrate that the effects of noise and heterogeneity are not independent. This is most apparent when examining the absolute information content of LIF populations (top left), and the information rate of FHN populations (bottom right).
+For example, LIF neurons show a resonance in heterogeneity in the absence of noise,
+but they also show a resonance in noise in the absence of heterogeneity (see also Figure~\ref{fig:infonoise}).
+However, if we choose the optimal levels of noise and heterogeneity in the absence of the other factor ($\sigma_\eta \approx 10^{-2}$ and $b_r \approx 2 \times 10^{-1}$), this combined level of noise and heterogeneity does not further increase the information content of the system. This indicates that the effects of noise and heterogeneity are not independent: the optimal level of noise depends on the level of heterogeneity, and vice versa.
 
 We propose that both noise and heterogeneity improve the information representation ability of a population of neurons by 1) desynchronizing the firing of neurons in the population and 2) linearizing the response of the population to an input signal. These shared mechanisms result in the non-independent interaction between noise and heterogeneity in terms of information content: once either noise or heterogeneity has adequately desynchronized a population, the addition of the other cannot further desynchronize or linearize, and therefore provides no additional increase in information representation. In the following two sections, we present additional experimental results to investigate and quantify the mechanisms of desynchronization and linearization.
 

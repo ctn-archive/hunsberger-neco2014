@@ -3,8 +3,9 @@ hunsberger-neco2014
 
 Source code for "The competing benefits of noise and heterogeneity in neural
 coding" by Eric Hunsberger, Matthew Scott, and Chris Eliasmith. The manuscript
-included in this repository is a preprint of the final article currently
-accepted for publication in Neural Computation.
+included in this repository is a preprint of the final article to be
+published in Neural Computation (see
+<http://www.mitpressjournals.org/doi/abs/10.1162/NECO_a_00621>).
 
 All the code in this repository has been run on a Linux machine. While ideally
 it should work without modification on other machines, if you are having
